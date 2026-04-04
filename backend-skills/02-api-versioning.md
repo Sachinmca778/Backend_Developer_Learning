@@ -2,7 +2,7 @@
 
 **Date learned:** 04 April 2025  
 **Phase:** Backend Skills  
-**Status:** ✅ Done / 🔄 In Progress / ⏳ Not Started  
+**Status:** ✅ Done 
 **Laravel equivalent:** Routes with prefix (`/api/v1`) — same concept
 
 ---
