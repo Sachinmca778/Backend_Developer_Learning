@@ -12,6 +12,10 @@
 When API changes break existing clients, versioning lets old 
 and new versions coexist.
 
+Socho tumhara ek API hai jo 10,000 users use kar rahe hain:
+GET /api/users → { "name": "Rahul", "phone": "9999999999" }
+Ab tumhe phone field hataani hai aur mobile rakhna hai. Agar seedha change kar do toh sab clients toot jaayenge. Isliye versioning hoti hai — purana version chalta rahe, naya version bhi available ho.
+
 **Breaking changes** → need new version:
 - Removing a field (`phone` deleted)
 - Renaming a field (`phone` → `mobile`)
@@ -26,7 +30,7 @@ and new versions coexist.
 
 ## 3 Approaches
 
-### 1. URI Versioning ✅ (Recommended)
+### 1. URI Versioning ✅ (Recommended)   // Version URL mein hi daal do.
 ```
 GET /api/v1/users
 GET /api/v2/users
@@ -45,7 +49,8 @@ Accept: application/vnd.myapp.v2+json
 
 ### 3. Query Param Versioning
 ```
-GET /api/users?version=2
+GET /api/users/1?version=1    ← V1
+GET /api/users/1?version=2    ← V2
 ```
 **Pros:** Simple  
 **Cons:** Caching issues  
@@ -81,15 +86,127 @@ public class UserControllerV2 {
 }
 ```
 
-### Deprecation Headers
+DTO classes:
 ```java
+// V1 DTO — old
+public class UserResponseV1 {
+    private String name;
+    private String phone;    // old field name
+}
+
+// V2 DTO — new
+public class UserResponseV2 {
+    private String name;
+    private String mobile;   // new field name
+}
+```
+
+### Header Versioning
+```java
+@RestController
+@RequestMapping("/api/users")
+public class UserController {
+
+    // V1 — jab client v1 header bheje
+    @GetMapping(
+        value = "/{id}",
+        produces = "application/vnd.myapp.v1+json"
+    )
+    public UserResponseV1 getUserV1(@PathVariable Long id) {
+        return new UserResponseV1("Rahul", "9999999999");
+    }
+
+    // V2 — jab client v2 header bheje
+    @GetMapping(
+        value = "/{id}",
+        produces = "application/vnd.myapp.v2+json"
+    )
+    public UserResponseV2 getUserV2(@PathVariable Long id) {
+        return new UserResponseV2("Rahul", "9999999999");
+    }
+}
+```
+
+### Query Parameter Versioning
+```java
+@RestController
+@RequestMapping("/api/users")
+public class UserController {
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getUser(
+            @PathVariable Long id,
+            @RequestParam(defaultValue = "1") int version) {
+
+        if (version == 1) {
+            return ResponseEntity.ok(new UserResponseV1("Rahul", "9999999999"));
+        } else if (version == 2) {
+            return ResponseEntity.ok(new UserResponseV2("Rahul", "9999999999"));
+        }
+
+        return ResponseEntity.badRequest().body("Invalid version");
+    }
+}
+```
+
+
+### Deprecation Headers (Version ko retire)
+Step 1 — Sunset Header bhejo (announce karo ki kab band hoga) :
+```java
+// Ek din V1 band karni padegi. Iske liye proper process hota hai:
+
 @GetMapping("/api/v1/users/{id}")
 public ResponseEntity<UserResponseV1> getUserV1(@PathVariable Long id) {
+
     return ResponseEntity.ok()
         .header("Deprecation", "true")
-        .header("Sunset", "Sat, 31 Dec 2025 23:59:59 GMT")
+        .header("Sunset", "Sat, 31 Dec 2025 23:59:59 GMT")  // ← is date ke baad band
+        .header("Link", "</api/v2/users>; rel=\"successor-version\"")  // ← naya version yahan hai
         .body(new UserResponseV1("Rahul", "9999999999"));
 }
+// Jab bhi koi V1 call karega, yeh headers milenge. Client developers ko pata chal jaayega ki migrate karo.
+```
+
+Step 2 — Warning bhi daal sakte ho response body mein:
+```java
+public class UserResponseV1 {
+    @JsonProperty("_warning")
+    private String warning = "V1 is deprecated. Migrate to /api/v2/users by Dec 2025";
+
+    private String name;
+    private String phone;
+}
+```
+
+Step 3 — Sunset date ke baad 410 Gone return karo:
+```java
+@GetMapping("/api/v1/users/{id}")
+public ResponseEntity<?> getUserV1(@PathVariable Long id) {
+    return ResponseEntity
+        .status(HttpStatus.GONE)   // 410 — resource permanently gone
+        .body("V1 API has been retired. Please use /api/v2/users");
+}
+```
+
+### Backward Compatibility — Real example
+```java
+// Smart approach — ek hi response mein dono fields rakho temporarily
+public class UserResponseV2 {
+    private String name;
+    private String mobile;      // naya field
+
+    @Deprecated
+    @JsonProperty("phone")      // purana field bhi bhejo — purane clients na tooten
+    private String phone;
+
+    // Constructor mein dono set karo
+    public UserResponseV2(String name, String mobile) {
+        this.name = name;
+        this.mobile = mobile;
+        this.phone = mobile;    // purana field mein bhi same value
+    }
+}
+// Isse purane V1 clients bhi kaam karte rehte hain kyunki unhe phone field milti rehti hai.
 ```
 
 ---
