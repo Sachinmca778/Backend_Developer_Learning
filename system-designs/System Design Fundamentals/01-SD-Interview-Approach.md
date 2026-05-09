@@ -4,6 +4,30 @@
 
 ---
 
+## Quick Walkthrough (Hinglish)
+
+> "**System Design interview** ka 80% game = structured thinking dikhana. Solution unique nahi chahiye — **trade-offs** clearly bolne aana chahiye. RESHADED ek **roadmap** hai jisse kabhi atak nahi sakte."
+
+**Cycle in plain Hinglish**:
+
+1. **R**equirements pucho — 'Kya banana hai? Kitne users? Kya scope mein nahi hai?'
+2. **E**stimate karo — DAU, QPS, storage. Round numbers chalenge — exact nahi chahiye.
+3. **S**chema/storage decide karo — SQL ya NoSQL? Kyun?
+4. **H**igh-level boxes draw karo — client → LB → service → DB → cache.
+5. **A**PI design karo — REST endpoints / RPC contracts.
+6. **D**eep dive karo ek-do components mein (interviewer prompt karega).
+7. **E**valuation — bottlenecks, failure modes, '10× scale par kya tootega?'
+
+**Key behaviour**:
+
+- Pehle **bolo** phir **draw** karo — silently whiteboard pe likhna interviewer ko frustrate karta hai.
+- Number bolne se pehle **assumption** likho ('Maan lo 100M DAU') — interviewer agree kare to aage badho.
+- **Trade-off explicit** karo — "Strong consistency chahiye to latency badhegi, eventual chunenge to user thode seconds purana data dekh sakta hai. Hum eventual lete hain kyunki..."
+
+> "**Soundbite**: 'Pehle clarify, fir estimate, fir architecture, fir deep-dive — usse pehle kuch bhi draw nahi karunga.'"
+
+---
+
 ## Table of Contents
 
 1. [Why a Framework](#why-a-framework)

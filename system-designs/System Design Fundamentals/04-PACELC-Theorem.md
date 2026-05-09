@@ -4,6 +4,45 @@
 
 ---
 
+## Quick Walkthrough (Hinglish)
+
+> "**PACELC = CAP ka realistic upgrade.** CAP sirf partition ke time ki baat karta hai. Lekin partitions toh rare hain — **99.9% time network theek** hota hai. Tab bhi ek trade-off hota hai: **Latency vs Consistency**. Wahi PACELC capture karta hai."
+
+**Decode the name**:
+
+```
+P A C  E L C
+│ │ │  │ │ └─ else Consistency
+│ │ │  │ └─── (if no partition) Latency
+│ │ │  └───── ELSE
+│ │ └──────── (if partition) Consistency
+│ └────────── (if partition) Availability
+└──────────── PARTITION
+```
+
+Translation:
+
+- **If P**artition → choose **A**vailability or **C**onsistency
+- **E**lse (no partition) → choose **L**atency or **C**onsistency
+
+**Real-world bucket**:
+
+| System | PACELC | Meaning |
+|--------|--------|---------|
+| **DynamoDB**, Cassandra, Riak | **PA / EL** | Partition mein A chunte, normal mein latency chunte (eventual reads) |
+| **HBase**, Zookeeper, etcd, Spanner | **PC / EC** | Partition mein C, normal mein bhi C (latency higher) |
+| **MongoDB** (default) | **PA / EC** | Partition mein A, normal mein C (majority reads se) |
+| **PNUTS** (Yahoo!) | **PC / EL** | Partition mein C, normal mein latency |
+
+**Why PACELC matters more**:
+
+- Apke users ko **latency dikhti hai every day**. Partition shayad **kabhi kabhi**.
+- Toh "EC ya EL" decision **product behaviour** decide karta hai — feed lazy load karega ya har refresh par DB hit karega?
+
+> "**Soundbite**: 'CAP textbook tha, PACELC production-grade hai. Real architects EL ya EC pe pehle baat karte hain — partition handling baad mein.'"
+
+---
+
 ## Table of Contents
 
 1. [Why PACELC](#why-pacelc)

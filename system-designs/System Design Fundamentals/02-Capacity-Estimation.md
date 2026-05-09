@@ -4,6 +4,33 @@
 
 ---
 
+## Quick Walkthrough (Hinglish)
+
+> "**Estimation = math by gut feel.** Calculator nahi chahiye — round figures (10, 100, 1000) mein soch lo. Interview mein 5 min ke andar **QPS, storage, bandwidth, memory** ek kone pe likh do."
+
+**4-step formula** (bas yaad rakho):
+
+| Quantity | Formula | Example |
+|----------|---------|---------|
+| **QPS** | `DAU × actions_per_user / 86400` | 100M × 5 / 86400 ≈ 6K req/s avg |
+| **Peak QPS** | `avg × 5` (rule of thumb) | 6K × 5 = 30K req/s |
+| **Storage / day** | `writes/day × bytes_per_record` | 50M × 500 B = 25 GB/day → 9 TB/year |
+| **Bandwidth** | `peak_QPS × payload_size` | 30K × 5 KB = 150 MB/s |
+| **Memory (cache)** | hot 20% of working set | 9 TB × 0.2 = 1.8 TB across cluster |
+
+**Numbers jo dimaag mein chahiye**:
+
+- 1 day = **86,400** seconds (≈10⁵)
+- 1 million req/day ≈ **12 QPS**
+- 1 KB = 1024 B, 1 MB = 1024 KB, 1 GB = 1024 MB
+- L1 cache = ns, RAM = 100 ns, SSD = 100 µs, disk = 10 ms, network round-trip same-region = 0.5 ms, cross-continent = 150 ms
+
+**Interview tip**: Numbers bolte waqt **assumption pehle** bolo — "Maan lo har user 5 actions/day karta hai..." — taaki interviewer challenge na kar sake.
+
+> "**Soundbite**: 'Decimal mein time waste mat karo — 6.4K bolo ya 10K bolo, dono accept hain. Interviewer dekh raha hai approach, accuracy nahi.'"
+
+---
+
 ## Table of Contents
 
 1. [Why Estimate](#why-estimate)

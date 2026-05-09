@@ -4,6 +4,23 @@
 
 ---
 
+## Quick Walkthrough (Hinglish)
+
+> "Long URL ko **chhota** karna hai, redirect karwana hai, aur **analytics** bhi chahiye. Sounds simple — but at scale yeh **read-heavy** problem ban jata hai (writes thode, redirects crore mein)."
+
+**Mental model**:
+
+- **Write path** kam — naya short banao + DB mein insert
+- **Read path** bahut zyada — jaise hi koi short URL hit kare → redirect chahiye **<50 ms**
+- Toh design pivot **read** ke liye → **Redis cache** + **read replicas** + **CDN** if global
+- ID generation ka decision **most important** — counter+base62 (predictable, no collision) ya hash truncate (stateless, collision risk) — interview mein **counter+base62** safe answer
+- **Custom alias** = unique constraint pe pakad lo
+- **Analytics** ko alag pipeline mein bhej do (Kafka → batch) — main redirect path par bojh mat dalo
+
+> "**Interview soundbite**: 'Postgres + Redis se start, Cassandra tab jab billion+ row ya multi-region writes ka case ho.'"
+
+---
+
 ## Table of Contents
 
 1. [Requirements Clarification](#requirements-clarification)

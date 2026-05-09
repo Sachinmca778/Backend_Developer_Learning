@@ -4,6 +4,31 @@
 
 ---
 
+## Quick Walkthrough (Hinglish)
+
+> "**CAP Theorem ka one-liner**: distributed system mein **C**onsistency, **A**vailability, **P**artition tolerance — teeno **ek saath nahi mil sakte**. Network partition aaye to **C ya A** mein se ek choose karna padega."
+
+**Definitions in plain Hinglish**:
+
+- **C — Consistency**: Har read **latest write** dega. Saare nodes ek hi data dikhayenge — same time pe.
+- **A — Availability**: Har request ka response milega (success ya failure data ke saath, error nahi).
+- **P — Partition Tolerance**: Network kat jaaye nodes ke beech to bhi system kaam karta rahe.
+
+**Reality check**:
+
+- **P optional nahi hai** — distributed system mein partitions hote hi hain (cable cut, switch fail, region down). Toh actual choice = **CP ya AP**.
+- **CP system** (MongoDB strong-read mode, HBase, etcd, Zookeeper) → partition aaye to ek side **request reject** kare. Bank, inventory, locks ke liye sahi.
+- **AP system** (Cassandra, DynamoDB, CouchDB, Riak) → partition aaye to dono sides **respond** karein, baad mein **eventual consistency** se merge ho jaaye. Social feed, shopping cart, DNS ke liye sahi.
+
+**Interview trap**:
+
+- "MongoDB CP hai" — half truth. Default `w:1` use karte ho to AP-leaning ho jata hai. `w:majority` + `readConcern: majority` use karo to CP.
+- Ek hi DB different settings mein different CAP behaviour de sakta hai.
+
+> "**Soundbite**: 'CAP binary nahi spectrum hai. Real systems tunable consistency dete hain — per-query decide karte ho.'"
+
+---
+
 ## Table of Contents
 
 1. [What is CAP](#what-is-cap)

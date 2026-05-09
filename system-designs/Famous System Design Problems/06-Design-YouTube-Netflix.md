@@ -4,6 +4,36 @@
 
 ---
 
+## Quick Walkthrough (Hinglish)
+
+> "Video platform = **upload pipeline** + **transcoding** + **global delivery**. Three completely different problems jo ek system mein milte hain."
+
+**Mental model — 4 stages**:
+
+1. **Upload**: Bade files (GBs) — chunked / resumable upload to **S3 multipart**. Network blip ho to whole file dobara nahi bhejna.
+2. **Transcode**: Source video → multiple resolutions (360p / 720p / 1080p / 4K) + multiple codecs (H.264, VP9, AV1). **Async** worker fleet (FFmpeg / Elastic Transcoder) job queue se pull karke process kare. Ek video → kai jobs parallel.
+3. **Package**: **HLS / DASH** — video ko chhote **segments** (~6 sec) mein todo + manifest file (`.m3u8` / `.mpd`). Adaptive bitrate ka foundation.
+4. **Deliver**: **CDN** sab kuch handle kare. Origin pe load nahi aana chahiye for popular videos. **Cache hit ratio = 95%+** target.
+
+**ABR (Adaptive Bitrate Streaming)**:
+
+- Player network speed monitor karta hai → bandwidth gir gaya = automatic 1080p → 720p → 360p switch
+- Wi-Fi mein wapas 4K — manifest mein saari variants listed hoti hain
+
+**Hot complications**:
+
+| Component | Choice |
+|-----------|--------|
+| **Metadata** (title, description) | PostgreSQL |
+| **Search** (full-text, autocomplete) | Elasticsearch |
+| **View count** | **Approximate** — Redis INCR + batch flush. Exact count = hot row disaster. |
+| **Recommendations** | Offline ML pipeline (Spark/Flink) → user/video vectors → ANN serving |
+| **DRM** (Netflix paid content) | Widevine / FairPlay / PlayReady + license server |
+
+> "**Interview soundbite**: 'Public view count exact nahi hota — YouTube bhi rounded dikhata hai (1.2M views). Counter ko Redis pe sharded rakho, batch job DB mein flush kare.'"
+
+---
+
 ## Table of Contents
 
 1. [Requirements](#requirements)

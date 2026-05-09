@@ -4,6 +4,22 @@
 
 ---
 
+## Quick Walkthrough (Hinglish)
+
+> "**Rate limiter = API ka bouncer.** Ek client agar pagal ho ke 10K req/sec maar raha hai, baaki users suffer na karein — uske liye limiter chahiye."
+
+**Mental model**:
+
+- **Kahan rakhein?** Best place = **API Gateway** (centralized, app ko clean rakhta hai). Edge (CDN) pe IP-flood block, app mein expensive endpoint extra strict.
+- **Algorithm?** Default = **token bucket** (burst allowed) ya **sliding window counter** (smooth, accurate).
+- **Distributed kaise?** Multiple gateway instances → counters **Redis** mein, scripts **Lua** mein (atomic, no race condition).
+- **Client ko bolna kya?** `429 Too Many Requests` + `Retry-After: 30` + `X-RateLimit-*` headers — taaki client **self-throttle** kare.
+- **Scope**: per-IP (DDoS), per-user (fairness), per-API-key (paying tiers), per-endpoint (heavy queries tighter).
+
+> "**Sabse common mistake**: per-instance in-memory limit lagana — distributed system mein effective limit `N × instances` ho jata hai. Always **shared store** (Redis)."
+
+---
+
 ## Table of Contents
 
 1. [Problem Statement](#problem-statement)

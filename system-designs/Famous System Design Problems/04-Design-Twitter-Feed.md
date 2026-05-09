@@ -4,6 +4,39 @@
 
 ---
 
+## Quick Walkthrough (Hinglish)
+
+> "Twitter ka **home timeline** = followed users ke recent tweets reverse-chronological order mein. Sounds easy, lekin asli problem hai **celebrity** — ek banda jiske 50M followers, ek tweet kare to **50M timelines update** karne padenge. Yeh fan-out problem interview ka heart hai."
+
+**Mental model — 3 strategies**:
+
+1. **Push (fan-out on write)**: Tweet aate hi har follower ki timeline mein insert kar do.
+   - ✅ Reads super fast (precomputed)
+   - ❌ Celeb tweets karta hai → 50M writes → slow + costly
+2. **Pull (fan-out on read)**: Read ke time pe har followee se latest tweets fetch karke merge karo.
+   - ✅ Writes cheap
+   - ❌ Reads slow — Twitter scale pe acceptable nahi
+3. **Hybrid (winning answer)**: Normal users ke liye **push**, celebrities ke liye **pull** (read time pe celeb tweets merge karo).
+
+**Storage**:
+
+- **Timeline**: per-user **Redis ZSET** — score = tweet_id (Snowflake, time-sortable), member = tweet_id
+- **Tweets**: durable store — Cassandra / sharded SQL by `tweet_id`
+- **Hot tweets** (viral): separate cache layer
+
+**Tweet flow**:
+
+```
+Tweet Service
+  ├── Persist tweet (durable)
+  ├── Publish "tweet.created" → Kafka
+  └── Async fan-out workers update follower ZSETs (push) — or skip for celebs
+```
+
+> "**Interview soundbite**: 'Celebrity threshold ~10K followers. Uske upar push nahi karta — seedha celeb's outbox mein tweet rakh deta hoon, read time pe merge hota hai.'"
+
+---
+
 ## Table of Contents
 
 1. [Requirements](#requirements)

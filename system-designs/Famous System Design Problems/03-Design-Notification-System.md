@@ -4,6 +4,31 @@
 
 ---
 
+## Quick Walkthrough (Hinglish)
+
+> "Order placed ho, bank transaction hua, friend ne mention kiya — har event ke liye user ko **push / SMS / email / in-app** mein bhejna hai. Multiple channels, multiple providers (FCM, APNS, Twilio, SendGrid), **retries**, **dedup**, **user preferences** — sab handle karna hai."
+
+**Mental model**:
+
+- **Producer** (orders / chat / billing) sirf event publish kare — channel ki tension nahi le
+- **Notification orchestrator** prefs check kare, template render kare, then **Kafka topic per channel** publish kare
+- Channel-specific **workers** Kafka se pull karke actual provider (FCM/Twilio/SendGrid) ko hit karein
+- **At-least-once delivery** → consumers **idempotent** banane padenge (ek hi OTP do baar nahi jana chahiye)
+- **DLQ** + alarms zaroori — provider down ho to messages safely park ho jaayein
+
+**Critical decisions**:
+
+| Decision | Choice |
+|----------|--------|
+| Bus | **Kafka** (high throughput) ya **SQS+SNS** (managed) |
+| Dedup | DB unique constraint + **Redis SETNX** with TTL |
+| Priority | Transactional (OTP) alag queue, marketing alag — warna OTP late ho jata hai |
+| Quiet hours | Orchestrator delay schedule kare (Kafka delay topic / SQS delay) |
+
+> "**Interview soundbite**: 'Transactional aur marketing kabhi same queue mein nahi — OTP late = user lost.'"
+
+---
+
 ## Table of Contents
 
 1. [Requirements](#requirements)

@@ -4,6 +4,29 @@
 
 ---
 
+## Quick Walkthrough (Hinglish)
+
+> "WhatsApp = **real-time messaging** at billions-of-users scale. Core requirements: 1:1 + group chat, **delivery + read receipts** (✓✓ blue), **online presence** ('last seen'), **media** (photos/videos), aur **end-to-end encryption**."
+
+**Mental model**:
+
+- **Real-time transport** = **WebSocket** (persistent TCP, both-direction). Long polling fallback corporate proxies ke liye.
+- **Storage** = **Cassandra** — write-heavy, time-series; partition key = `chat_id`. Itne messages SQL pe scale nahi karenge.
+- **Receipts**: server message persist hote hi `sent`, recipient device ACK pe `delivered`, user open kare to `read`.
+- **Group chat**: message **ek baar persist** hota hai (chat_id pe), fan-out **online members** ko notification ke liye — duplicate rows mat banao.
+- **Presence**: Redis key `presence:{user_id}` with **TTL ~60s**, client har 30s heartbeat bheje. TTL expire = offline.
+- **Media**: client **S3 pre-signed URL** se direct upload kare, message mein sirf URL/key. Server bandwidth bach jata hai.
+- **E2EE** (Signal Protocol): server ke paas sirf **ciphertext** — decrypt karne ka power nahi. Trade-off: server-side search / moderation impossible.
+
+**Connection routing problem**:
+
+- 100M users connected via WebSocket — message kaunse gateway pod pe deliver karein?
+- **Connection registry** (Redis): `user_id → gateway_instance` mapping. Message aaye → registry dekho → right pod ko forward.
+
+> "**Interview soundbite**: 'WebSocket sticky session enough nahi — distributed pub/sub layer chahiye taaki kisi bhi gateway pe message land kare to right user ko reach ho jaye.'"
+
+---
+
 ## Table of Contents
 
 1. [Requirements](#requirements)
