@@ -246,7 +246,6 @@ docker run myimg echo hello
 **CMD replace:** `docker run myimg --server.port=9090` often ENTRYPOINT ke saath interact karta hai — Spring Boot ke case mein args jar ko jaate hain agar ENTRYPOINT `java -jar` hai.
 
 ---
-
 ## Exec Form vs Shell Form
 
 ### Exec form (JSON array) — recommended
