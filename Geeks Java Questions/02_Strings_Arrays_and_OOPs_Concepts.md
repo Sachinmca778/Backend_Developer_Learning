@@ -7,6 +7,7 @@
 **Matlab:** Java mein `String` ek object hai jo characters ke sequence ko represent karta hai (`java.lang.String`). Java mein String primitive type nahi, balki ek Class hai.
 
 ### Key Characteristics:
+
 1. **Immutable:** Once created, String object ka state/content change nahi kiya ja sakta.
 2. **Backing Array:** Internal level par String character array (`char[]` / `byte[]` in Java 9+) hold karta hai.
 3. **String Pool:** Memory optimization ke liye String literals String Constant Pool (SCP) mein manage hote hain.
@@ -147,10 +148,12 @@ public class JaggedArrayDemo {
 ## 60. What are the advantages and disadvantages of an array?
 
 ### Advantages:
+
 - **Fast Random Access:** `O(1)` time complexity via index lookups.
 - **Cache Locality:** Contiguous memory allocation CPU cache performance improve karti hai.
 
 ### Disadvantages:
+
 - **Fixed Size:** Array length runtime par dynamic grow nahi ho sakti.
 - **Homogeneous Data:** Sirf same type ke elements store hote hain.
 - **Costly Insertion/Deletion:** Intermediate elements shift karne par `O(N)` cost aati hai.
@@ -210,6 +213,7 @@ public class JaggedArrayDemo {
 **Matlab:** `this` ek reference variable hai jo current class ke current object instance ko point karta hai.
 
 ### Use Cases:
+
 1. Instance fields ko local variable shadowing se differentiate karne ke liye (`this.name = name`).
 2. Constructor chaining ke liye (`this(10, 20)`).
 3. Current instance ko parameter ke form mein pass karne ke liye.
@@ -221,6 +225,7 @@ public class JaggedArrayDemo {
 **Matlab:** `super` reference variable hai jo immediate parent (superclass) object ko point karta hai.
 
 ### Use Cases:
+
 1. Parent class ke hidden fields ko access karne ke liye (`super.variableName`).
 2. Parent class ke overridden method ko invoke karne ke liye (`super.methodName()`).
 3. Parent class constructor invoke karne ke liye (`super()`).
@@ -321,6 +326,7 @@ public class Employee {
 ## 79. Where and how can you use a private constructor?
 
 ### Use Cases:
+
 1. **Singleton Design Pattern:** Object creation restrict karne ke liye (`getInstance()` static method se single object return hota hai).
 2. **Utility / Helper Classes:** Class jisme sirf static utility methods hon (`Math` class), object instantiation block karne ke liye private constructor rakhte hain.
 
@@ -358,6 +364,7 @@ public class Employee {
 **Matlab:** Ek aisa interface jiske andar **KOI field ya method declare NAHI hota** (Empty Interface).
 
 ### Examples:
+
 - `java.io.Serializable`
 - `java.lang.Cloneable`
 - `java.util.RandomAccess`
@@ -570,6 +577,7 @@ obj.makeSound(); // Child class method executes at runtime
 ## 111. Can we modify the `throws` clause of superclass method while overriding it?
 
 ### Rules for Exception Handling in Overriding:
+
 1. Superclass method declares NO checked exception -> Subclass can ONLY declare Unchecked Exceptions (RuntimeException).
 2. Superclass method declares Checked Exception -> Subclass can declare same, child checked exception, or NO exception, but CANNOT declare broader super-type checked exception.
 

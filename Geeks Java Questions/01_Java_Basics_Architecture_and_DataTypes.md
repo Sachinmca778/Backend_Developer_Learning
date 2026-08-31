@@ -7,11 +7,13 @@
 **Matlab:** Java ek platform-independent programming language hai. Iska matlab hai ki agar aapne Java code kisi ek Operating System (jaise Windows) par likha aur compile kiya, toh aap wahi compiled code kisi dusre Operating System (jaise Linux ya macOS) par bina kisi change ke chala sakte ho. Isse **WORA (Write Once, Run Anywhere)** kehte hain.
 
 ### Kaise Kaam Karta Hai? (Internal Architecture)
+
 1. **Source Code Compilation:** Jab aap `.java` file ko `javac` compiler se compile karte ho, toh woh machine code (CPU specific binary code) nahi banata. Iski jagah, woh **Bytecode** (`.class` file) generate karta hai.
 2. **Bytecode Role:** Bytecode ek intermediate, highly optimized instruction set hai jo kisi specific hardware ya OS par dependent nahi hota.
 3. **JVM Execution:** Bytecode ko run karne ke liye har OS ke paas apna specific **JVM (Java Virtual Machine)** hota hai. Windows ka JVM bytecode ko Windows machine instructions mein translate karta hai, aur Linux ka JVM Linux machine instructions mein.
 
 ```
+
 [ Java Code (.java) ] 
          | (javac compiler)
          v
@@ -37,6 +39,7 @@
 **Matlab:** Java multi-purpose, robust aur secure language hai jo enterprise software development mein sabse widely use hoti hai.
 
 ### Important Java Features:
+
 1. **Simple:** Java ka syntax C/C++ se derive hua hai par easy hai. Isme complex features jaise explicit pointers aur operator overloading remove kar diye gaye hain.
 2. **Platform Independent:** WORA concept par kaam karta hai (Bytecode + JVM).
 3. **Object-Oriented (OOP):** Java mein sab kuch Object aur Class ke around ghoomta hai (Encapsulation, Inheritance, Polymorphism, Abstraction).
@@ -54,6 +57,7 @@
 **Matlab:** JVM ek abstract virtual machine hai jo Java Bytecode (`.class` file) ko execute karti hai aur runtime environment provide karti hai.
 
 ### Core Architecture of JVM:
+
 1. **Classloader Subsystem:** `.class` files ko load, link aur initialize karta hai.
 2. **Runtime Data Areas (JVM Memory Storage):**
    - **Method Area:** Class level structure, static variables aur method metadata.
@@ -73,6 +77,7 @@
 **Matlab:** JIT Compiler JVM execution engine ka ek part hai jo Java application ki performance aur speed badhane ke liye use hota hai.
 
 ### JIT Compiler Kaise Kaam Karta Hai?
+
 - Purely interpreted languages slow hote hain kyunki har line har baar interpret hoti hai.
 - JIT compiler program run hone ke dauran bytecode ko analyze karta hai aur jo methods baar-baar call hote hain (unhe **Hotspots** kehte hain), unhe **Native Machine Code** mein compile kar deta hai.
 - Agli baar jab woh method call hota hai, toh JVM interpretation skipped karke direct Machine code run karti hai.
@@ -114,11 +119,13 @@ public class JITDemo {
 **Matlab:** ClassLoader JVM ka ek subsystem hai jo `.class` files ko storage (disk/network) se read karke Memory (Method Area) mein load karta hai.
 
 ### Types of ClassLoaders (Hierarchy):
+
 1. **Bootstrap ClassLoader:** Sabse top parent loader jo core Java API classes (`rt.jar` / `java.base` module - e.g., `java.lang.Object`, `java.util.String`) load karta hai. Written in C/C++.
 2. **Extension / Platform ClassLoader:** `$JAVA_HOME/lib/ext` ya core platform extension packages ko load karta hai.
 3. **Application / System ClassLoader:** User ka application classpath (`-classpath` ya `-jar`) se custom classes ko load karta hai.
 
 ### ClassLoader Principles:
+
 - **Delegation Hierarchy Principle:** Class loader pehle apne parent loader ko search karne deta hai. Agar parent nahi milti tabhi khud load karta hai.
 - **Visibility Principle:** Child ClassLoader parent classes ko dekh sakta hai, par Parent child classes ko nahi dekh sakta.
 - **Uniqueness Principle:** Ek class ek hi ClassLoader se dubara load nahi hoti.
@@ -130,6 +137,7 @@ public class JITDemo {
 **Matlab:** Teh teenon Java Environment ke core building blocks hain.
 
 ```
+
 +-------------------------------------------------------------+
 | JDK (Java Development Kit)                                  |
 | +-----------------------------------------+ +-------------+ |
@@ -159,7 +167,7 @@ public class JITDemo {
 | **Memory Management** | Automatic (Garbage Collection). | Manual (`new` and `delete` operators). |
 | **Multiple Inheritance** | Classes mein supported nahi (Interfaces dwara achievable). | Classes mein directly supported. |
 | **Operator Overloading** | Not Supported (except `+` string concatenation). | Supported. |
-| **Compilation** | Source Code -> Bytecode -> Native Code. | Source Code -> Direct Machine Code. |
+| **Compilation** |` Source Code -> Bytecode -> Native Code`. |` Source Code -> Direct Machine Code`. |
 | **Global Variables** | Global variables nahi hote (Class ke andar define hote hain). | Global variables supported hain. |
 
 ---
@@ -169,6 +177,7 @@ public class JITDemo {
 **Matlab:** Yeh Java application ka mandatory **entry point** method hai jahan se JVM code execution start karta hai.
 
 ### Word-by-Word Explanation:
+
 - **`public`:** Access Modifier. JVM is method ko class ke bahar se call karta hai, isliye iska public hona zaroori hai.
 - **`static`:** Static Method. JVM ko class ka object create kiye bina method call karne ki permission deta hai (`Test.main()`).
 - **`void`:** Return Type. Program finish hone par JVM ko koi value return nahi karta.
@@ -193,6 +202,7 @@ public class MainExplanation {
 **Matlab:** String Constant Pool Heap memory ke andar ek special area hai jahan Java String literals ko store karta hai taaki duplicate String objects na bane aur memory save ho.
 
 ### String Creation Mechanisms:
+
 1. **Using Literal (`String s = "Hello";`):** JVM pehle SCP mein search karta hai. Agar `"Hello"` exist karta hai, toh existing reference return hota hai. Agar nahi, toh naya object SCP mein banta hai.
 2. **Using `new` Keyword (`String s = new String("Hello");`):** JVM hamesha ek naya object **Heap memory** mein banata hai, chahe woh value SCP mein pehle se ho ya na ho.
 
@@ -226,6 +236,7 @@ public class StringPoolDemo {
 **Matlab:** Package ek folder structure/namespace hierarchy hai jo related Classes, Interfaces aur Sub-packages ko bundle karne ke liye use hoti hai.
 
 ### Example:
+
 `package com.app.services;`
 
 ---
@@ -258,6 +269,7 @@ public class StringPoolDemo {
 **Matlab:** Data Types variable dwara hold karne wale data ka nature aur memory allocation size define karte hain.
 
 ```
+
                     Data Types in Java
                             |
          +------------------+------------------+
@@ -278,6 +290,7 @@ Primitive Data Types                   Non-Primitive (Reference)
 **Matlab:** `byte` ek 8-bit signed two's complement integer hai jiski range **-128 se 127** hoti hai.
 
 ### Use Cases:
+
 - Memory saving ke liye jab hum large arrays deal kar rahe hon aur values small integer range mein fixed hon.
 - **Raw Byte I/O Streams:** Files read/write karte waqt (Images, Audio, Network Streams).
 
@@ -288,6 +301,7 @@ Primitive Data Types                   Non-Primitive (Reference)
 **Matlab:** Nahi, Java developers ko explicit pointers declare ya access karne ki permission **nahi** deta.
 
 ### Kyun Nahi Deta?
+
 1. **Security:** Direct memory address manipulation se buffer overflows, memory leaks aur unauthorized memory access security leaks ho sakte hain.
 2. **Simplicity & Safety:** Java memory management Garbage Collector ke dwaara control hoti hai.
 
@@ -410,6 +424,7 @@ Java mein Objects create karne ke different tarike:
 ```bash
 java MyProgram arg1 arg2 100
 ```
+
 Yeh arguments `main(String[] args)` method mein `args[0] = "arg1"`, `args[1] = "arg2"`, `args[2] = "100"` ke form mein accessible hote hain.
 
 ---

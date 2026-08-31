@@ -28,6 +28,7 @@
 ## 172. What are the two ways in which Thread can be created in Java?
 
 ### 1. Extending `Thread` Class:
+
 ```java
 class MyThread extends Thread {
     @Override
@@ -39,6 +40,7 @@ class MyThread extends Thread {
 ```
 
 ### 2. Implementing `Runnable` Interface (Recommended Best Practice):
+
 ```java
 class MyTask implements Runnable {
     @Override
@@ -75,6 +77,7 @@ class MyTask implements Runnable {
 ## 175. Describe the Life Cycle of a Thread in Java.
 
 ```
+
  [ NEW ] -----(start())-----► [ RUNNABLE ] ◄---(Scheduler)---► [ RUNNING ]
                                    |                              |
                            (sleep / wait / block)            (run() ends)

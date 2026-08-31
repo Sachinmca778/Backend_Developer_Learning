@@ -7,6 +7,7 @@
 **Matlab:** Java Collections Framework (`java.util` package) classes aur interfaces ka ek standardized architecture set hai jo objects ke group ko store, manipulate, search, sort aur iterate karne ke liye efficient data structures (Lists, Sets, Queues, Maps) provide karta hai.
 
 ```
+
                     Iterable (Interface)
                        |
                    Collection (Interface)
@@ -37,13 +38,16 @@
 `ArrayList` by default non-synchronized (not thread-safe) hota hai. Isse synchronize karne ke 2 main ways:
 
 1. **`Collections.synchronizedList()` Wrapper:**
+
    ```java
    List<String> list = Collections.synchronizedList(new ArrayList<>());
-   ```
+```
+
 2. **`CopyOnWriteArrayList` (Concurrent Collection - Recommended for High Read Operations):**
+
    ```java
    List<String> cowList = new CopyOnWriteArrayList<>();
-   ```
+```
 
 ---
 
@@ -59,6 +63,7 @@
 **Matlab:** Java mein Generic Arrays allowed nahi hote (`new T[10]` compile error deta hai).
 
 ### Technical Reason:
+
 - **Type Erasure:** Generics Compile-Time par Type check karne ke baad Erasure dwara compile bytecode se type parameters ko remove kar dete hain.
 - **Arrays Covariance:** Arrays runtime par apni element type remember rakhte hain (`ArrayStoreException` throw karte hain agar invalid object put ho).
 - Runtime par `T` Erasure ki wajah se `Object` ban jata hai, jisse Array runtime type safety system break ho jata.
@@ -75,6 +80,7 @@
 ## 123. Explain the method to convert `ArrayList` to Array and Array to `ArrayList`.
 
 ### 1. Array to `ArrayList`:
+
 ```java
 String[] arr = {"A", "B", "C"};
 List<String> list = new ArrayList<>(Arrays.asList(arr));
@@ -82,6 +88,7 @@ List<String> list = new ArrayList<>(Arrays.asList(arr));
 ```
 
 ### 2. `ArrayList` to Array:
+
 ```java
 List<String> list = new ArrayList<>();
 list.add("Java");
@@ -143,6 +150,7 @@ List<String> readOnlyList = Collections.unmodifiableList(list);
 **Matlab:** `Stack` `Vector` class ki subclass hai jo LIFO (Last In First Out) structure represent karti hai.
 
 ### Key Methods:
+
 - `push(E item)`: Add element.
 - `pop()`: Remove & return top element.
 - `peek()`: Return top element without removal.
@@ -155,6 +163,7 @@ List<String> readOnlyList = Collections.unmodifiableList(list);
 **Matlab:** `Set` interface duplicates allow **NAHI** karta.
 
 ### Major Implementations:
+
 1. **`HashSet`:** Hashing backed by `HashMap`. Unordered, fast `O(1)` operations.
 2. **`LinkedHashSet`:** Maintains **Insertion Order** via doubly-linked list buckets.
 3. **`TreeSet`:** Red-Black Tree backed. Stores elements in **Sorted Order** (`O(log N)` complexity).
@@ -174,6 +183,7 @@ public boolean add(E e) {
     return map.put(e, PRESENT) == null; // Value is dummy PRESENT object
 }
 ```
+
 Jab aap `hashSet.add(element)` call karte ho, `HashSet` us element ko `HashMap` ke **KEY** ke form mein store karta hai aur Value me dummy `PRESENT` object pass karta hai.
 
 ---
@@ -218,6 +228,7 @@ Jab aap `hashSet.add(element)` call karte ho, `HashSet` us element ko `HashMap` 
 **Matlab:** `ConcurrentHashMap` high-concurrency multi-threaded environments ke liye designed thread-safe Map implementation hai.
 
 ### Internal Working (Java 8+):
+
 - Synchronized `Hashtable` ya `Collections.synchronizedMap` ki tarah poore Map ko lock **nahi** karta.
 - Uses **Bucket-level CAS (Compare-And-Swap) operations** and **`synchronized` locks on individual Bucket Head Nodes (Node Bins)**.
 - Multiple threads different buckets par simultaneously read/write kar sakte hain (**Lock Striping / Segment Locking concept**).

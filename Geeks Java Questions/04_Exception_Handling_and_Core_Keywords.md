@@ -5,6 +5,7 @@
 ## 151. Explain Fail-Fast iterator and Fail-Safe iterator along with examples for each.
 
 ### 1. Fail-Fast Iterator:
+
 **Matlab:** Jab aap kisi collection ko iterate kar rahe hon aur iteration ke dauran original collection modify (element add/remove) ho jaye (bina iterator ke apne `remove()` method ke), toh iterator immediately **`ConcurrentModificationException`** throw karta hai.
 
 - **Mechanism:** Internal **`modCount` (Modification Count)** value check karta hai. Iteration ke beech `modCount != expectedModCount` milte hi fail ho jata hai.
@@ -22,6 +23,7 @@ while (it.hasNext()) {
 ```
 
 ### 2. Fail-Safe Iterator:
+
 **Matlab:** Iteration ke dauran collection mein changes hone par exception throw **NAHI** karta.
 
 - **Mechanism:** Original collection ki **Copy (Snapshot)** par iterate karta hai ya lock-free concurrent structure operate karta hai.
@@ -69,6 +71,7 @@ Broadly 2 categories of Exceptions:
 ## 155. Explain the hierarchy of Java Exception classes.
 
 ```
+
                     Throwable (java.lang)
                               |
          +--------------------+--------------------+
@@ -159,6 +162,7 @@ strArray[0] = Integer.valueOf(100); // Throws ArrayStoreException at runtime!
 **Matlab:** Object Cloning existing object ka exact duplicate copy create karne ka process hai.
 
 ### Steps to Achieve Cloning:
+
 1. Class ko **`java.lang.Cloneable`** marker interface implement karna padta hai.
 2. `Object` class ke **`clone()`** method ko override karna padta hai.
 
@@ -174,6 +178,7 @@ public class Person implements Cloneable {
 ```
 
 ### Shallow vs Deep Copy:
+
 - **Shallow Copy:** Primitive values duplicate hoti hain, par nested objects ke references copy hote hain (shared object).
 - **Deep Copy:** Nested objects ki bhi alag new object copy create hoti hai.
 

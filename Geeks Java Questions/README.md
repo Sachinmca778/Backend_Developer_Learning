@@ -18,6 +18,7 @@ Welcome to the ultimate **Core Java Interview Preparation Repository**! All 206+
 ---
 
 ## 🎯 Features of this Guide:
+
 - **Comprehensive Explanations:** Contains more depth, internal workings, and memory diagrams than GeeksforGeeks.
 - **Hinglish Language:** Native conversational tone ("Matlab", "Key Note", "Rule") making complex concepts effortless to revise.
 - **Code Snippets with Outputs:** Executable Java code samples with expected output for practical clarity.
