@@ -49,7 +49,7 @@ class MyTask implements Runnable {
 // Execution: new Thread(new MyTask()).start();
 ```
 
-> [!TIP]
+> **Tip:**
 > **Kyun Runnable Interface Better Hai?**
 > Class extension Java mein single class restrict hoti hai. Runnable implement karne par aapki class abhi bhi kisi dusri Parent Class ko `extends` kar sakti hai.
 
@@ -75,10 +75,10 @@ class MyTask implements Runnable {
 ## 175. Describe the Life Cycle of a Thread in Java.
 
 ```
- [ NEW ] ─────(start())─────► [ RUNNABLE ] ◄───(Scheduler)───► [ RUNNING ]
-                                   │                              │
+ [ NEW ] -----(start())-----► [ RUNNABLE ] ◄---(Scheduler)---► [ RUNNING ]
+                                   |                              |
                            (sleep / wait / block)            (run() ends)
-                                   ▼                              ▼
+                                   v                              v
                              [ WAITING / ]                  [ TERMINATED ]
                              [ BLOCKED   ]
 ```
@@ -116,7 +116,7 @@ t.setDaemon(true); // Must be called BEFORE t.start()
 t.start();
 ```
 
-> [!IMPORTANT]
+> **Important Note:**
 > **JVM Shutdown Behavior:** Jab sabhi non-daemon (User) threads finish ho jaate hain, JVM daemon threads ko wait kiye bina application shutdown kar deta hai.
 
 ---

@@ -8,15 +8,15 @@
 
 ```
                     Iterable (Interface)
-                       │
+                       |
                    Collection (Interface)
-        ┌──────────────┼──────────────┐
-        ▼              ▼              ▼
+        +--------------+--------------+
+        v              v              v
   List (Interface) Set (Interface) Queue (Interface)
     • ArrayList      • HashSet       • PriorityQueue
     • LinkedList     • LinkedHashSet • ArrayDeque
     • Vector         • TreeSet (SortedSet)
-      └─ Stack
+      +- Stack
 ```
 
 ---

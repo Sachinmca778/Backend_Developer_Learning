@@ -70,13 +70,13 @@ Broadly 2 categories of Exceptions:
 
 ```
                     Throwable (java.lang)
-                              │
-         ┌────────────────────┴────────────────────┐
-         ▼                                         ▼
+                              |
+         +--------------------+--------------------+
+         v                                         v
    Exception (Class)                         Error (Class)
-         │                                   • OutOfMemoryError
-  ┌──────┴──────────────────────┐            • StackOverflowError
-  ▼                             ▼
+         |                                   • OutOfMemoryError
+  +------+----------------------+            • StackOverflowError
+  v                             v
 Checked Exceptions      RuntimeException (Unchecked)
 • IOException           • NullPointerException
 • SQLException          • ArithmeticException

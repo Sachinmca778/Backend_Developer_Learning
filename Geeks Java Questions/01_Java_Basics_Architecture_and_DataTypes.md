@@ -13,21 +13,21 @@
 
 ```
 [ Java Code (.java) ] 
-         │ (javac compiler)
-         ▼
-  [ Bytecode (.class) ] ──── Intermediate Code (Platform Independent)
-         │
- ┌───────┼───────┐
- ▼       ▼       ▼
+         | (javac compiler)
+         v
+  [ Bytecode (.class) ] ---- Intermediate Code (Platform Independent)
+         |
+ +-------+-------+
+ v       v       v
 [Windows [Linux  [macOS
-  JVM]    JVM]    JVM]  ── Platform Dependent JVMs
-   │       │       │
-   ▼       ▼       ▼
+  JVM]    JVM]    JVM]  -- Platform Dependent JVMs
+   |       |       |
+   v       v       v
 [Windows [Linux  [macOS
  Machine]Machine]Machine]
 ```
 
-> [!IMPORTANT]
+> **Important Note:**
 > **Key Note:** Java Language aur Bytecode platform-independent hain, lekin JVM itself platform-dependent hoti hai!
 
 ---
@@ -130,16 +130,16 @@ public class JITDemo {
 **Matlab:** Teh teenon Java Environment ke core building blocks hain.
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│ JDK (Java Development Kit)                                  │
-│ ┌─────────────────────────────────────────┐ ┌─────────────┐ │
-│ │ JRE (Java Runtime Environment)          │ │ Development │ │
-│ │ ┌──────────────────────┐ ┌────────────┐ │ │ Tools       │ │
-│ │ │ JVM                  │ │ Set of     │ │ │ (javac,     │ │
-│ │ │ (Executes Bytecode)  │ │ Libraries  │ │ │  javadoc,   │ │
-│ │ └──────────────────────┘ └────────────┘ │ │  jdb)       │ │
-│ └─────────────────────────────────────────┘ └─────────────┘ │
-└─────────────────────────────────────────────────────────────┘
++-------------------------------------------------------------+
+| JDK (Java Development Kit)                                  |
+| +-----------------------------------------+ +-------------+ |
+| | JRE (Java Runtime Environment)          | | Development | |
+| | +----------------------+ +------------+ | | Tools       | |
+| | | JVM                  | | Set of     | | | (javac,     | |
+| | | (Executes Bytecode)  | | Libraries  | | |  javadoc,   | |
+| | +----------------------+ +------------+ | |  jdb)       | |
+| +-----------------------------------------+ +-------------+ |
++-------------------------------------------------------------+
 ```
 
 | Component | Full Form | Contains | Usage |
@@ -259,9 +259,9 @@ public class StringPoolDemo {
 
 ```
                     Data Types in Java
-                            │
-         ┌──────────────────┴──────────────────┐
-         ▼                                     ▼
+                            |
+         +------------------+------------------+
+         v                                     v
 Primitive Data Types                   Non-Primitive (Reference)
 (8 Standard Built-in Types)            (Objects, Classes, Arrays)
   - Boolean: boolean                     - String

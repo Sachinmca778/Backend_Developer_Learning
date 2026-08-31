@@ -139,7 +139,7 @@ public class JaggedArrayDemo {
 
 **Matlab:** Haan, array reference variable ko `volatile` declare kar sakte hain (`volatile int[] arr`).
 
-> [!WARNING]
+> **Warning:**
 > **Important Catch:** `volatile` keyword sirf **Array Reference** ki visibility guarantee karta hai (agar Poora array dusre array se replace ho jaye). Array ke **individual elements (`arr[i]`) volatile nahi hote**! Individual element visibility ke liye `AtomicIntegerArray` use kiya jata hai.
 
 ---
@@ -274,7 +274,7 @@ public class JaggedArrayDemo {
 
 **Matlab:** Agar aap class mein koi bhi constructor explicitly nahi likhte, toh Java compiler (`javac`) automatically ek **Default No-Arg Constructor** generate kar deta hai.
 
-> [!NOTE]
+> **Note:**
 > Agar aapne koi bhi custom constructor (e.g., Parameterized) likh diya, toh compiler default constructor generate **nahi** karega!
 
 ---
