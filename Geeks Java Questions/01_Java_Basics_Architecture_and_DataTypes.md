@@ -12,24 +12,24 @@
 2. **Bytecode Role:** Bytecode ek intermediate, highly optimized instruction set hai jo kisi specific hardware ya OS par dependent nahi hota.
 3. **JVM Execution:** Bytecode ko run karne ke liye har OS ke paas apna specific **JVM (Java Virtual Machine)** hota hai. Windows ka JVM bytecode ko Windows machine instructions mein translate karta hai, aur Linux ka JVM Linux machine instructions mein.
 
-```
-
-[ Java Code (.java) ] 
+```text
+[ Java Code (.java) ]
+         |
          | (javac compiler)
          v
   [ Bytecode (.class) ] ---- Intermediate Code (Platform Independent)
          |
  +-------+-------+
+ |       |       |
  v       v       v
 [Windows [Linux  [macOS
-  JVM]    JVM]    JVM]  -- Platform Dependent JVMs
+  JVM]    JVM]    JVM]  ---- Platform Dependent JVMs
    |       |       |
    v       v       v
 [Windows [Linux  [macOS
  Machine]Machine]Machine]
 ```
 
-> **Important Note:**
 > **Key Note:** Java Language aur Bytecode platform-independent hain, lekin JVM itself platform-dependent hoti hai!
 
 ---
@@ -86,7 +86,7 @@
 public class JITDemo {
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
-        for(int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 100000; i++) {
             calculateSum(i, i + 1); // Repeated method call -> JIT compiles this to native code
         }
         System.out.println("Execution Done in: " + (System.currentTimeMillis() - start) + " ms");
@@ -134,10 +134,9 @@ public class JITDemo {
 
 ## 7. Difference between JVM, JRE, and JDK
 
-**Matlab:** Teh teenon Java Environment ke core building blocks hain.
+**Matlab:** Yeh teenon Java Environment ke core building blocks hain.
 
-```
-
+```text
 +-------------------------------------------------------------+
 | JDK (Java Development Kit)                                  |
 | +-----------------------------------------+ +-------------+ |
@@ -167,7 +166,7 @@ public class JITDemo {
 | **Memory Management** | Automatic (Garbage Collection). | Manual (`new` and `delete` operators). |
 | **Multiple Inheritance** | Classes mein supported nahi (Interfaces dwara achievable). | Classes mein directly supported. |
 | **Operator Overloading** | Not Supported (except `+` string concatenation). | Supported. |
-| **Compilation** |` Source Code -> Bytecode -> Native Code`. |` Source Code -> Direct Machine Code`. |
+| **Compilation** | Source Code to Bytecode to Native Code. | Source Code to Direct Machine Code. |
 | **Global Variables** | Global variables nahi hote (Class ke andar define hote hain). | Global variables supported hain. |
 
 ---
@@ -268,8 +267,7 @@ public class StringPoolDemo {
 
 **Matlab:** Data Types variable dwara hold karne wale data ka nature aur memory allocation size define karte hain.
 
-```
-
+```text
                     Data Types in Java
                             |
          +------------------+------------------+
@@ -278,9 +276,9 @@ Primitive Data Types                   Non-Primitive (Reference)
 (8 Standard Built-in Types)            (Objects, Classes, Arrays)
   - Boolean: boolean                     - String
   - Numeric:                             - Array
-      • Integer: byte, short, int, long  - Class / Object
-      • Floating: float, double          - Interface
-      • Character: char
+      - Integer: byte, short, int, long  - Class / Object
+      - Floating: float, double          - Interface
+      - Character: char
 ```
 
 ---
@@ -538,7 +536,7 @@ Java mein Console input ne ke main 4 tarike hain:
 1. **Arithmetic Operators:** `+`, `-`, `*`, `/`, `%`
 2. **Unary Operators:** `++`, `--`, `+`, `-`, `!`
 3. **Assignment Operators:** `=`, `+=`, `-=`, `*=`, `/=`, `%=`
-4. **Relational Operators:** `==`, `!=`, `>`, `<`, `>=`, `<=`
+4. **Relational Operators:** `==`, `!=`, `>=`, `<=`, `<`, `>`
 5. **Logical Operators:** `&&` (Short-circuit AND), `||` (Short-circuit OR), `!`
 6. **Ternary Operator:** `variable = (condition) ? value_if_true : value_if_false;`
 7. **Bitwise Operators:** `&`, `|`, `^` (XOR), `~` (Complement)
