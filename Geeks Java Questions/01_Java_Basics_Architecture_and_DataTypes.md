@@ -364,7 +364,7 @@ Default values instance aur static fields par assign hoti hain:
 - `long`: `0L`
 - `float`: `0.0f`
 - `double`: `0.0d`
-- `char`: `' '` (Null character)
+- `char`: `'\u0000'` (Null character)
 - `boolean`: `false`
 - Object References (`String`, `Integer`, Custom Objects, Arrays): **`null`**
 
