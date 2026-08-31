@@ -1,6 +1,6 @@
 # Part 1: Java Basics, JVM Architecture & Data Types
 
----
+--
 
 ## 1. Is Java Platform Independent? If then, how?
 
